@@ -1,0 +1,18 @@
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+&& apt-get install -y apt-utils vim git gcc automake pkg-config libtool libtool-bin cmake python3 \
+&& apt-get install -y libcurl4 libcurl4-openssl-dev openssl libssl-dev libgpgme11 libgpgme-dev \
+&& apt-get install -y zlib1g zlib1g-dev
+
+RUN cd ~/ && git clone https://github.com/libarchive/libarchive.git \
+&& mkdir -p ~/libarchive-build && cd ~/libarchive-build \
+&& cmake ../libarchive && make all && make install
+
+RUN cd ~/ && git clone https://github.com/openSUSE/libsolv.git \
+&& mkdir -p ~/libsolv-build && cd ~/libsolv-build \
+&& cmake ../libsolv && make all && make install
+
+ENV PKG_CONFIG_PATH /usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
