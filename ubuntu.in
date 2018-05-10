@@ -15,4 +15,7 @@ RUN cd ~/ && git clone https://github.com/openSUSE/libsolv.git \
 && mkdir -p ~/libsolv-build && cd ~/libsolv-build \
 && cmake ../libsolv && make all && make install
 
+RUN ldconfig /usr/local/lib && \
+ldconfig /usr/local/lib64
+
 ENV PKG_CONFIG_PATH /usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
